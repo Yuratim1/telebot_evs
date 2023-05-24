@@ -13,15 +13,13 @@ user_dict = {}
 ##################################### BOT ENTRY POINT START ######################################
 @bot.message_handler(commands=['start'], chat_types=["private"])
 def start(message):
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=0, is_persistent=True)
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=0, is_persistent=False)
     regButton = types.KeyboardButton(text="Register \U0001F4C4", request_contact=False)
-    searchButton = types.KeyboardButton(text="Search \U0001F50E")
-    aboutButton = types.KeyboardButton(text="Premium \U0001F48E")
-    premiumButton = types.KeyboardButton(text="About Us \U0001F4F0")
+    searchButton = types.KeyboardButton(text="Sign In \U0001F50E")
+    aboutButton = types.KeyboardButton(text="About Us \U0001F4F0")
     markup.row(regButton)
     markup.row(searchButton)
     markup.row(aboutButton)
-    markup.row(premiumButton)
     welcomeText = "Welcome to the EVS search project" \
                   " here you can search for available projects depending on your selection" \
                   " please register first so we know which countries and" \
@@ -41,10 +39,8 @@ def menu_handler(message):
     match regSearch[0]:
         case "Register":
             print("Register")
-        case "Search":
-            print("Search")
-        case "Premium":
-            print("Premium")
+        case "Sign":
+            print("Sign")
         case "About":
             print("AboutUs")
 
