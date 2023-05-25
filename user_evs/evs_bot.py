@@ -16,10 +16,10 @@ categArray = ["Animals", "Teaching", "Training", "Disabled People"]
 @dataclass
 class Person:
     userid: int
-    registerDate: datetime
+    registerDate: int = 0
     premium: bool = False
-    categoryselect: str = field(init=False)
-    countryselect: str = field(init=False)
+    categoryselect: list[str] = field(init=False, default_factory=list)
+    countryselect: list[str] = field(init=False, default_factory=list)
     
 
 ##################################### BOT ENTRY POINT START ######################################
@@ -59,6 +59,11 @@ def menu_handler(message):
 ##################################### BOT MENU HANDLER END ######################################
 ##################################### BOT REGISTRATION START ######################################
 def registration(message):
+    print(message.from_user.id)
+    print(message.date)
+    currentUserClass = Person(userid=message.from_user.id)
+    
+    print(currentUserClass)
     
     keyboard = []
         
@@ -82,5 +87,5 @@ def aboutUs(message):
 ##################################### ABOUT BUTTON END ######################################
 
 bot.infinity_polling()
-if __name__ == "__main__":
-    start()
+# if __name__ == "__main__":
+#     start()
