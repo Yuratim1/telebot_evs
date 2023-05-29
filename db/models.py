@@ -17,6 +17,7 @@ class User(Base):
     username: Mapped[int] = mapped_column(Integer(50), nullable=False)
     registerDate: Mapped[Date] = mapped_column(Date, nullable=False)
     premiumBool: Mapped[bool] = mapped_column(default=False)
+    searchTime: Mapped[DateTime]
 
     def __repr__(self) -> str:
         return f"User(id={self.id!r}, name={self.username!r}, regDate={self.registerDate!r}), premium={self.premiumBool!r}"

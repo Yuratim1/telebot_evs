@@ -1,6 +1,8 @@
 import telebot
 from telebot import types
 import re
+import datetime, time
+from dataclasses import dataclass
 # import requests
 # import inspect
 
@@ -9,6 +11,11 @@ bot = telebot.TeleBot("6236528384:AAEdxftW-3UsYIhEqrI3D7is9ecObwRZkWY")
 
 back_slash = "\n"
 user_dict = {}
+
+@dataclass
+class User:
+    pass
+
 
 ##################################### BOT ENTRY POINT START ######################################
 @bot.message_handler(commands=['start'], chat_types=["private"])
