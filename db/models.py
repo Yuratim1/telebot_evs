@@ -11,31 +11,30 @@ engine = create_engine("sqlite+pysqlite:///testevs.db", echo=True)
 class Base(DeclarativeBase):
     pass
 
-class User(Base):
-    __tablename__ = "users_table"
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    username: Mapped[int] = mapped_column(Integer(50), nullable=False)
-    registerDate: Mapped[Date] = mapped_column(Date, nullable=False)
-    premiumBool: Mapped[bool] = mapped_column(default=False)
-    searchTime: Mapped[DateTime]
+# class User(Base):
+#     __tablename__ = "users_table"
+#     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+#     username: Mapped[int] 
+#     registerDate: Mapped[Date]
+#     premiumBool: Mapped[bool] = mapped_column(default=False)
 
-    def __repr__(self) -> str:
-        return f"User(id={self.id!r}, name={self.username!r}, regDate={self.registerDate!r}), premium={self.premiumBool!r}"
+#     def __repr__(self) -> str:
+#         return f"User(id={self.id}, name={self.username}, regDate={self.registerDate}), premium={self.premiumBool}"
 
-class selectedCateg(Base):
-    __tablename__ = "user_categ"
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    username: Mapped[int] = mapped_column(Integer(50), nullable=False)
-    category: Mapped[String]
+# class selectedCateg(Base):
+#     __tablename__ = "user_categ"
+#     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+#     username: Mapped[int] = mapped_column(Integer(50), nullable=False)
+#     category: Mapped[String]
     
-    def __repr__(self) -> str:
-        return f"User(id={self.id!r}, name={self.username!r}, category={self.category!r})"
+#     def __repr__(self) -> str:
+#         return f"User(id={self.id!r}, name={self.username!r}, category={self.category!r})"
     
-class selectedCountry(Base):
-    __tablename__ = "user_country"
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    username: Mapped[int] = mapped_column(Integer(50), nullable=False)
-    country: Mapped[String]
+# class selectedCountry(Base):
+#     __tablename__ = "user_country"
+#     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+#     username: Mapped[int] = mapped_column(Integer(50), nullable=False)
+#     country: Mapped[String]
 
-    def __repr__(self) -> str:
-        return f"User(id={self.id!r}, name={self.username!r}, Country={self.category!r})"
+#     def __repr__(self) -> str:
+#         return f"User(id={self.id!r}, name={self.username!r}, Country={self.category!r})"
