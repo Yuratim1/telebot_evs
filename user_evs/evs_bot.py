@@ -11,7 +11,10 @@ bot = telebot.TeleBot("6236528384:AAEdxftW-3UsYIhEqrI3D7is9ecObwRZkWY")
 
 back_slash = "\n"
 user_dict = {}
-categArray = ["Animals", "Teaching", "Training", "Disabled People"]
+categArray = ["SocialMedia", "Animals", "Theatre", "PermacultureFarming", "EventAssistance",
+              "Education", "Sport", "RefugeeMigrants", "CultureArt", "DisabledPeople",
+              "YoungPeople", "HealthCare", "SocialWork", "Environment", "SchoolKindergarten",
+              "AwarnessRaisingCampaign"]
 
 @dataclass
 class Person:
@@ -20,7 +23,7 @@ class Person:
     premium: bool = False
     categoryselect: list[str] = field(init=False, default_factory=list)
     countryselect: list[str] = field(init=False, default_factory=list)
-    
+
 
 ##################################### BOT ENTRY POINT START ######################################
 @bot.message_handler(commands=['start'], chat_types=["private"])
@@ -61,9 +64,8 @@ def menu_handler(message):
 def registration(message):
     print(message.from_user.id)
     print(message.date)
-    currentUserClass = Person(userid=message.from_user.id)
+    # currentUserClass = Person(userid=message.from_user.id)
     
-    print(currentUserClass)
     
     keyboard = []
         
