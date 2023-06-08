@@ -15,6 +15,12 @@ categArray = ["SocialMedia", "Animals", "Theatre", "PermacultureFarming", "Event
               "Education", "Sport", "RefugeeMigrants", "CultureArt", "DisabledPeople",
               "YoungPeople", "HealthCare", "SocialWork", "Environment", "SchoolKindergarten",
               "AwarnessRaisingCampaign"]
+countriesArray = ["Albania", "Austria", "Belgium", "Bosnia", "Bulgaria",
+                  "Croatia", "Czech", "Denmark", "Estonia", "Finland", "France",
+                  "Germany", "Greece", "Hungary", "Italy", "Latvia", "Lithuania", "Luxembourg",
+                  "Malta", "Moldova", "Montenegro", "Netherlands", "Macedonia", "Norway",
+                  "Poland", "Portugal", "Romania", "Serbia", "Slovakia", "Slovenia", "Spain",
+                  "Sweden", "Switzerland", "Turkey"]
 
 @dataclass
 class Person:
@@ -23,6 +29,32 @@ class Person:
     premium: bool = False
     categoryselect: list[str] = field(init=False, default_factory=list)
     countryselect: list[str] = field(init=False, default_factory=list)
+
+    @property
+    def category_array(self):
+        return self.categoryselect
+    
+    @category_array.setter
+    def category_array(self, categ)
+        self.categoryselect.append(categ)
+
+    
+    @property
+    def country_array(self):
+        return self.countryselect
+    
+    @country_array.setter
+    def country_array(self, country):
+        self.countryselect.append(country)
+
+    # @property
+    # def reg_date(self)
+    #     return self.registerDate
+    
+    # @reg_date.setter
+    # def reg_date(self, reg):
+        
+
 
 
 ##################################### BOT ENTRY POINT START ######################################
@@ -62,29 +94,66 @@ def menu_handler(message):
 ##################################### BOT MENU HANDLER END ######################################
 ##################################### BOT REGISTRATION START ######################################
 def registration(message):
-    print(message.from_user.id)
-    print(message.date)
-    # currentUserClass = Person(userid=message.from_user.id)
-    
-    
-    keyboard = []
-        
-    for i, button in enumerate(categArray):
-        keyboard.append([types.InlineKeyboardButton(button , callback_data=f"{button}")])
+    keyboard = types.InlineKeyboardMarkup(row_width=3, )
+    albania = types.InlineKeyboardButton('Albania', callback_data='Albania')
+    austria = types.InlineKeyboardButton('Austria', callback_data='Austria')
+    belgium = types.InlineKeyboardButton('Belgium', callback_data='Belgium')
+    bosnia = types.InlineKeyboardButton('Bosnia and Herzegovina', callback_data='Bosnia')
+    bulgaria = types.InlineKeyboardButton('Bulgaria', callback_data='Bulgaria')
+    croatia = types.InlineKeyboardButton('Croatia', callback_data='Croatia')
+    czech = types.InlineKeyboardButton('Czech Republic', callback_data='Czech')
+    denmark = types.InlineKeyboardButton('Denmark', callback_data='Denmark')
+    estonia = types.InlineKeyboardButton('Estonia', callback_data='Estonia')
+    finland = types.InlineKeyboardButton('Finland', callback_data='Finland')
+    france = types.InlineKeyboardButton('France', callback_data='France')
+    germany = types.InlineKeyboardButton('Germany', callback_data='Germany')
+    greece = types.InlineKeyboardButton('Greece', callback_data='Greece')
+    hungary = types.InlineKeyboardButton('Hungary', callback_data='Hungary')
+    italy = types.InlineKeyboardButton('Italy', callback_data='Italy')
+    latvia = types.InlineKeyboardButton('Latvia', callback_data='Latvia')
+    lithuania = types.InlineKeyboardButton('Lithuania', callback_data='Lithuania')
+    luxembourg = types.InlineKeyboardButton('Luxembourg', callback_data='Luxembourg')
+    malta = types.InlineKeyboardButton('Malta', callback_data='Malta')
+    moldova = types.InlineKeyboardButton('Moldova', callback_data='Moldova')
+    montenegro = types.InlineKeyboardButton('Montenegro', callback_data='Montenegro')
+    netherlands = types.InlineKeyboardButton('Netherlands', callback_data='Netherlands')
+    macedonia = types.InlineKeyboardButton('Macedonia', callback_data='Macedonia')
+    norway = types.InlineKeyboardButton('Norway', callback_data='Norway')
+    poland = types.InlineKeyboardButton('Poland', callback_data='Poland')
+    portugal = types.InlineKeyboardButton('Portugal', callback_data='Portugal')
+    romania = types.InlineKeyboardButton('Romania', callback_data='Romania')
+    serbia = types.InlineKeyboardButton('Serbia', callback_data='Serbia')
+    slovakia = types.InlineKeyboardButton('Slovakia', callback_data='Slovakia')
+    spain = types.InlineKeyboardButton('Spain', callback_data='Spain')
+    sweden = types.InlineKeyboardButton('Sweden', callback_data='Sweden')
+    switzerland = types.InlineKeyboardButton('Switzerland', callback_data='Switzerland')
+    turkey = types.InlineKeyboardButton('Turkey', callback_data='Turkey')
+    keyboard.add(albania, austria, belgium)
+    keyboard.add(bosnia, bulgaria)
+    keyboard.add(croatia, czech)
+    keyboard.add(denmark, estonia, finland)
+    keyboard.add(france, germany, greece)
+    keyboard.add(hungary, italy, latvia)
+    keyboard.add(lithuania, luxembourg)
+    keyboard.add(malta, moldova, montenegro)
+    keyboard.add(netherlands, macedonia)
+    keyboard.add(norway, poland, portugal)
+    keyboard.add(romania, serbia, slovakia)
+    keyboard.add(spain, sweden)
+    keyboard.add(switzerland, turkey)
+    country_text = "Choose a country in which the project will take place"
+    bot.send_message(message.from_user.id, text=country_text, reply_markup=keyboard)
+    print(message.text)
+    print(message.id)
 
-    reply_markup = types.InlineKeyboardMarkup(keyboard)
-    bot.send_message(message.from_user.id, "Please choose the category you interested in", reply_markup = reply_markup)
-    
-
-
-
-
-
+@bot.add_callback_query_handler(func= lambda message.text: )
+def CategorySelect(message):
+    print(message.text)
+    print(message.id)
 
 ##################################### ABOUT BUTTON START ######################################
 def aboutUs(message):
     pass
-
 
 ##################################### ABOUT BUTTON END ######################################
 
