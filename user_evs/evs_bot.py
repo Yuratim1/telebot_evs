@@ -131,8 +131,8 @@ def registrationStart(message):
     sweden = types.InlineKeyboardButton('Sweden', callback_data='Sweden')
     switzerland = types.InlineKeyboardButton('Switzerland', callback_data='Switzerland')
     turkey = types.InlineKeyboardButton('Turkey', callback_data='Turkey')
-    CountryKeyboard.add(albania, austria, belgium, bosnia)
-    CountryKeyboard.add(bulgaria, croatia, czech, denmark)
+    CountryKeyboard.add(albania, austria, belgium, bosnia) # will need to resize
+    CountryKeyboard.add(bulgaria, croatia, czech, denmark) # will need to resize
     CountryKeyboard.add(denmark, estonia, finland)
     CountryKeyboard.add(france, germany, greece)
     CountryKeyboard.add(hungary, italy, latvia)
@@ -208,6 +208,8 @@ def CategorySelected(message):
 @bot.callback_query_handler(func= lambda message: message.data == "YES")
 def submit_new_registration(message):
     print("Im in")
+    print(message)
+    # print(message.chat.data)
     db_commit()
 
 @bot.callback_query_handler(func= lambda message: message.data == "NO")
