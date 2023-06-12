@@ -11,10 +11,10 @@ bot = telebot.TeleBot("6236528384:AAEdxftW-3UsYIhEqrI3D7is9ecObwRZkWY")
 
 back_slash = "\n"
 user_dict = {}
-categArray = ["SocialMedia", "Animals", "Theatre", "PermacultureFarming", "EventAssistance",
-              "Education", "Sport", "RefugeeMigrants", "CultureArt", "DisabledPeople",
-              "YoungPeople", "HealthCare", "SocialWork", "Environment", "SchoolKindergarten",
-              "AwarnessRaisingCampaign"]
+categArray = ["Social Media", "Animals", "Theatre", "Permaculture Farming", "Event Assistance",
+              "Education", "Sport", "Refugee/Migrants", "Culture/Art", "Disabled People",
+              "Young People", "HealthCare", "Social Work", "Environment", "School/Kindergarten",
+              "Awarness Raising Campaign"]
 countriesArray = ["Albania", "Austria", "Belgium", "Bosnia", "Bulgaria",
                   "Croatia", "Czech", "Denmark", "Estonia", "Finland", "France",
                   "Germany", "Greece", "Hungary", "Italy", "Latvia", "Lithuania", "Luxembourg",
@@ -35,7 +35,7 @@ class Person:
         return self.categoryselect
     
     @category_array.setter
-    def category_array(self, categ)
+    def category_array(self, categ):
         self.categoryselect.append(categ)
 
     
@@ -53,14 +53,16 @@ class Person:
     
     # @reg_date.setter
     # def reg_date(self, reg):
-        
 
+##################################### DB COMMIT NEW USER START ######################################
+def db_commit():
+    pass
 
-
+##################################### DB COMMIT NEW USER END ######################################
 ##################################### BOT ENTRY POINT START ######################################
 @bot.message_handler(commands=['start'], chat_types=["private"])
 def start(message):
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=0, is_persistent=False)
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=0, one_time_keyboard=True)
     regButton = types.KeyboardButton(text="Register \U0001F4C4", request_contact=False)
     searchButton = types.KeyboardButton(text="Sign In \U0001F50E")
     aboutButton = types.KeyboardButton(text="About Us \U0001F4F0")
@@ -70,22 +72,22 @@ def start(message):
     welcomeText = "Welcome to the EVS search project" \
                   " here you can search for available projects depending on your selection" \
                   " please register first so we know which countries and" \
-                  " what projects you want to find "
+                  " what projects you are interested in"
     bot.send_message(message.from_user.id, welcomeText, reply_markup = markup)
-    print(message.from_user.id)
-    print("message text->" + message.text)
+    # print(message.from_user.id)
+    # print("message text->" + message.text)
 ##################################### BOT ENTRY POINT END ######################################
 ##################################### BOT MENU HANDLER START ######################################
 @bot.message_handler(content_types=['text'])
 def menu_handler(message):
-    print(message)
-    print(message.text)
+    # print(message)
+    # print(message.text)
     regSearch = re.split("\s", message.text, 1)
     print(regSearch)
 
     match regSearch[0]:
         case "Register":
-            registration(message)
+            registrationStart(message)
         case "Sign":
             print("Sign")
         case "About":
@@ -93,8 +95,9 @@ def menu_handler(message):
 
 ##################################### BOT MENU HANDLER END ######################################
 ##################################### BOT REGISTRATION START ######################################
-def registration(message):
-    keyboard = types.InlineKeyboardMarkup(row_width=3, )
+def registrationStart(message):
+
+    CountryKeyboard = types.InlineKeyboardMarkup(row_width=4)
     albania = types.InlineKeyboardButton('Albania', callback_data='Albania')
     austria = types.InlineKeyboardButton('Austria', callback_data='Austria')
     belgium = types.InlineKeyboardButton('Belgium', callback_data='Belgium')
@@ -128,29 +131,90 @@ def registration(message):
     sweden = types.InlineKeyboardButton('Sweden', callback_data='Sweden')
     switzerland = types.InlineKeyboardButton('Switzerland', callback_data='Switzerland')
     turkey = types.InlineKeyboardButton('Turkey', callback_data='Turkey')
-    keyboard.add(albania, austria, belgium)
-    keyboard.add(bosnia, bulgaria)
-    keyboard.add(croatia, czech)
-    keyboard.add(denmark, estonia, finland)
-    keyboard.add(france, germany, greece)
-    keyboard.add(hungary, italy, latvia)
-    keyboard.add(lithuania, luxembourg)
-    keyboard.add(malta, moldova, montenegro)
-    keyboard.add(netherlands, macedonia)
-    keyboard.add(norway, poland, portugal)
-    keyboard.add(romania, serbia, slovakia)
-    keyboard.add(spain, sweden)
-    keyboard.add(switzerland, turkey)
-    country_text = "Choose a country in which the project will take place"
-    bot.send_message(message.from_user.id, text=country_text, reply_markup=keyboard)
-    print(message.text)
-    print(message.id)
+    CountryKeyboard.add(albania, austria, belgium, bosnia)
+    CountryKeyboard.add(bulgaria, croatia, czech, denmark)
+    CountryKeyboard.add(denmark, estonia, finland)
+    CountryKeyboard.add(france, germany, greece)
+    CountryKeyboard.add(hungary, italy, latvia)
+    CountryKeyboard.add(lithuania, luxembourg)
+    CountryKeyboard.add(malta, moldova, montenegro)
+    CountryKeyboard.add(netherlands, macedonia)
+    CountryKeyboard.add(norway, poland, portugal)
+    CountryKeyboard.add(romania, serbia, slovakia)
+    CountryKeyboard.add(spain, sweden)
+    CountryKeyboard.add(switzerland, turkey)
+    country_text = "Choose a country in which the project will take place:"
+    bot.send_message(message.from_user.id, text=country_text, reply_markup=CountryKeyboard)
+    # print(message.id)
+    # print(message)
+    # print(message.chat.id)
+    
 
-@bot.add_callback_query_handler(func= lambda message.text: )
-def CategorySelect(message):
-    print(message.text)
-    print(message.id)
+@bot.callback_query_handler(func= lambda message: message.data in countriesArray)
+def CountrySelected(message):
+    selected_country = message.data
+    bot.edit_message_text(
+        chat_id=message.message.chat.id,
+        message_id=message.message.message_id,
+        text=f"Choose a country in which the project will take place:{back_slash}Country Selected -> {selected_country}",
+        reply_markup=None
+    )
+    CategKeyboard = types.InlineKeyboardMarkup(row_width=3)
+    socialmedia = types.InlineKeyboardButton('Social Media', callback_data='Social Media')
+    animals = types.InlineKeyboardButton('Animals', callback_data='Animals')
+    theatre = types.InlineKeyboardButton('Theatre', callback_data='Theatre')
+    permaculturefarming = types.InlineKeyboardButton('Permaculture Farming', callback_data='Permaculture Farming')
+    eventassistance = types.InlineKeyboardButton('Event Assistance', callback_data='Event Assistance')
+    education = types.InlineKeyboardButton('Education', callback_data='Education')
+    sport = types.InlineKeyboardButton('Sport', callback_data='Sport')
+    refugeemigrants = types.InlineKeyboardButton('Refugee/Migrants', callback_data='Refugee/Migrants')
+    cultureart = types.InlineKeyboardButton('Culture/Art', callback_data='Culture"/"Art')
+    disabledpeople = types.InlineKeyboardButton('Disabled People', callback_data='Disabled People')
+    youngpeople = types.InlineKeyboardButton('Young People', callback_data='Young People')
+    healthcare = types.InlineKeyboardButton('Health Care', callback_data='Health Care')
+    socialwork = types.InlineKeyboardButton('Social Work', callback_data='Social Work')
+    environment = types.InlineKeyboardButton('Environment', callback_data='Environment')
+    schoolkindergarten = types.InlineKeyboardButton('School/Kindergarten', callback_data='School/Kindergarten')
+    awarnessraisingcampaign = types.InlineKeyboardButton('Awarness Raising Campaign', callback_data='Awarness Raising Campaign')
 
+    CategKeyboard.add(socialmedia, animals, theatre)
+    CategKeyboard.add(permaculturefarming, eventassistance)
+    CategKeyboard.add(education, sport, refugeemigrants)
+    CategKeyboard.add(cultureart, disabledpeople)
+    CategKeyboard.add(youngpeople, healthcare)
+    CategKeyboard.add(socialwork, environment)
+    CategKeyboard.add(schoolkindergarten)
+    CategKeyboard.add(awarnessraisingcampaign)
+
+    categ_text = "Please choose the category you are interested in:"
+    bot.send_message(message.from_user.id, text=categ_text, reply_markup=CategKeyboard)
+
+@bot.callback_query_handler(func= lambda message: message.data in categArray)
+def CategorySelected(message):
+    selected_category = message.data
+
+    confirmationKeyboard = types.InlineKeyboardMarkup(row_width=2)
+    confirmKey = types.InlineKeyboardButton('Yes', callback_data='YES')
+    declineKey = types.InlineKeyboardButton('No', callback_data='NO')
+    confirmationKeyboard.add(confirmKey, declineKey)
+
+    bot.edit_message_text(
+        chat_id=message.message.chat.id,
+        message_id=message.message.message_id,
+        text=f"Please choose the category you are interested in:{back_slash}Category Selected -> {selected_category}{back_slash}{back_slash}Is your selection correct?",
+        reply_markup=confirmationKeyboard
+    )
+
+@bot.callback_query_handler(func= lambda message: message.data == "YES")
+def submit_new_registration(message):
+    print("Im in")
+    db_commit()
+
+@bot.callback_query_handler(func= lambda message: message.data == "NO")
+def cancel_new_registration(message):
+    start(message)
+
+##################################### BOT REGISTRATION END ######################################
 ##################################### ABOUT BUTTON START ######################################
 def aboutUs(message):
     pass
