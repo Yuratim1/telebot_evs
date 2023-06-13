@@ -187,11 +187,13 @@ def CountrySelected(message):
     CategKeyboard.add(awarnessraisingcampaign)
 
     categ_text = "Please choose the category you are interested in:"
-    bot.send_message(message.from_user.id, text=categ_text, reply_markup=CategKeyboard)
-
-@bot.callback_query_handler(func= lambda message: message.data in categArray)
+    cntry = bot.send_message(message.from_user.id, text=categ_text, reply_markup=CategKeyboard)
+    bot.register_callback_query_handler(cntry, CategorySelected)
+    
+# @bot.callback_query_handler(func= lambda message: message.data in categArray)
 def CategorySelected(message):
     selected_category = message.data
+    print(selected_category)
 
     confirmationKeyboard = types.InlineKeyboardMarkup(row_width=2)
     confirmKey = types.InlineKeyboardButton('Yes', callback_data='YES')
